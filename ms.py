@@ -29,6 +29,8 @@ missing_values_after = df.isnull().sum()
 print("\nMissing Values After Imputation:")
 print(missing_values_after)
 
+df.to_csv('cleanedData.csv', index=False)
+
 # Remove units from 'Mileage'
 df['Mileage'] = df['Mileage'].astype(str)
 df['Mileage'] = df['Mileage'].str.replace(' kmpl', '').str.replace(' km/kg', '').astype(float)
@@ -42,11 +44,13 @@ df['Power'] = df['Power'].astype(str)
 df['Power'] = df['Power'].str.replace(' bhp', '').astype(float)
 
 # Remove units from 'New_Price' and handle 'nan' values
-df['New_Price'] = df['New_Price'].str.replace(' Cr', '0000000')
+df['New_Price'] = df['New_Price'].str.replace(' Lakh', '').str.replace(' Cr', '0000000')
 df['New_Price'] = df['New_Price'].replace({'': None}).astype(float)
 
 # Print the updated DataFrame
 print(df)
+
+df.to_csv('Units.csv', index=False)
 
 # Convert categorical variables into one-hot encoded values
 df = pd.get_dummies(df, columns=['Fuel_Type', 'Transmission'])
@@ -64,6 +68,8 @@ df['Current_Age'] = current_year - df['Year']
 
 # Print the updated DataFrame
 print(df)
+
+df.to_csv('columnAddition.csv', index=False)
 
 import pandas as pd
 
